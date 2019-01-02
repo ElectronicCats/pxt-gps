@@ -4,29 +4,20 @@ namespace gps {
     let results: string[] = []
     let valid_sentence = false
     let NMEAdata: string = ""; // another iframe could write to this
-    let ind
 
     /**
     * Get encode.
     */
     //% blockId=gpsencode block="gps encode"
     //% weight=1
-    export function encode(): void {
+    export function encode() {
         NMEAdata = serial.readLine(serial.delimiters(Delimiters.NewLine))
-        ind = NMEAdata.indexOf(",")
-
-        while (ind != -1) {
-            results.push(NMEAdata.slice(0, ind))
-            NMEAdata = NMEAdata.slice(ind + 1)
-            ind = NMEAdata.indexOf(",")
-        }
-        results.push(NMEAdata)
-
+        results = NMEAdata.split(",")
         if ((results[2].compare("A")) == 1) {
             valid_sentence = false
         } else {
             valid_sentence = true
-        }
+        } 
     }
 
     /**
@@ -42,7 +33,7 @@ namespace gps {
         else {
             long = 0
         }
-        return results[0]
+        return NMEAdata
     }
 
     /**
