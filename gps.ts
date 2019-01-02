@@ -2,44 +2,63 @@ namespace gps {
     let lat = 0
     let long = 0
     let results: string[] = []
+    let valid_sentence = false
+    let NMEAdata: string = ""; // another iframe could write to this
+    let ind
 
     /**
-     * Get position longitude.
-     */
-    //% blockId=gps block="gps get longitude"
+    * Get encode.
+    */
+    //% blockId=gpsencode block="gps encode"
     //% weight=1
-    export function longitude(): number {
-        long = parseInt(results[5])
-        long = (long / 1000000.0)
-        return long
+    export function encode(): void {
+        NMEAdata = serial.readLine(serial.delimiters(Delimiters.NewLine))
+        ind = NMEAdata.indexOf(",")
+
+        while (ind != -1) {
+            results.push(NMEAdata.slice(0, ind))
+            NMEAdata = NMEAdata.slice(ind + 1)
+            ind = NMEAdata.indexOf(",")
+        }
+        results.push(NMEAdata)
+
+        if ((results[2].compare("A")) == 1) {
+            valid_sentence = false
+        } else {
+            valid_sentence = true
+        }
+    }
+
+    /**
+    * Get position longitude.
+    */
+    //% blockId=gpslongitude block="gps get longitude"
+    //% weight=1
+    export function longitude(): string {
+        if (valid_sentence == true) {
+            long = parseInt(results[5])
+            long = (long / 100.0)
+        }
+        else {
+            long = 0
+        }
+        return results[0]
     }
 
     /**
     * Get position latitude.
     */
-    //% blockId=gps block="gps get latitude"
+    //% blockId=gpslatitude block="gps get latitude"
     //% weight=1
     export function latitude(): number {
-        lat = parseInt(results[3])
-        lat = (lat / 1000000.0)
-        return lat
-    }
-
-    /**
-    * Get encode.
-    */
-    //% blockId=gps block="gps encode"
-    //% weight=1
-    export function encode(): void {
-        let valid_sentence = serial.readLine(serial.delimiters(Delimiters.NewLine))
-        let ind = valid_sentence.indexOf(",")
-
-        while (ind != -1) {
-            results.push(valid_sentence.slice(0, ind))
-            valid_sentence = valid_sentence.slice(ind + 1)
-            ind = valid_sentence.indexOf(",")
+        if (valid_sentence == true) {
+            lat = parseInt(results[3])
+            lat = (lat / 100.0)
         }
-        results.push(valid_sentence)
+        else {
+            lat = 0
+        }
+        return lat
     }
 
 }
