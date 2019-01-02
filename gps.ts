@@ -25,7 +25,7 @@ namespace gps {
     */
     //% blockId=gpslongitude block="gps get longitude"
     //% weight=1
-    export function longitude(): string {
+    export function longitude(): number {
         if (valid_sentence == true) {
             long = parseInt(results[5])
             long = (long / 100.0)
@@ -33,7 +33,7 @@ namespace gps {
         else {
             long = 0
         }
-        return NMEAdata
+        return long
     }
 
     /**
