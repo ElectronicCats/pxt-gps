@@ -8,7 +8,7 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "gps.ts"
     ],
     "testFiles": [
         "test.ts"
