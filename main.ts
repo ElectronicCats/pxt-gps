@@ -25,6 +25,11 @@ namespace gps {
         return lat
     }
 
+    /**
+    * Get encode.
+    */
+    //% blockId=gps block="gps encode"
+    //% weight=1
     export function encode(): void {
         let valid_sentence = serial.readLine(serial.delimiters(Delimiters.NewLine))
         let ind = valid_sentence.indexOf(",")
@@ -35,9 +40,6 @@ namespace gps {
             ind = valid_sentence.indexOf(",")
         }
         results.push(valid_sentence)
-        helpers.arrayForEach(results, function (value: string, index: number) {
-            console.log(value)
-        })
     }
 
 }
