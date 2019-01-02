@@ -1,20 +1,32 @@
 namespace gps {
-    let latitude = 0
-    let longitude = 0
+    let lat = 0
+    let long = 0
     let results: string[] = []
 
     /**
-     * Get position latitude and longitude.
+     * Get position longitude.
      */
-    //% blockId=gps block="gps get position"
+    //% blockId=gps block="gps get longitude"
     //% weight=1
-    export function get_position(): void {
-        latitude = (latitude / 1000000.0);
-        longitude = (longitude / 1000000.0);
+    export function longitude(): number {
+        long = parseInt(results[5])
+        long = (long / 1000000.0)
+        return long
     }
 
-    function encode(): void {
-        let valid_sentence = serial.readLine()
+    /**
+    * Get position latitude.
+    */
+    //% blockId=gps block="gps get latitude"
+    //% weight=1
+    export function latitude(): number {
+        lat = parseInt(results[3])
+        lat = (lat / 1000000.0)
+        return lat
+    }
+
+    export function encode(): void {
+        let valid_sentence = serial.readLine(serial.delimiters(Delimiters.NewLine))
         let ind = valid_sentence.indexOf(",")
 
         while (ind != -1) {
