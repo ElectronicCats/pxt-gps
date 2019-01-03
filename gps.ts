@@ -11,6 +11,7 @@ namespace gps {
     let fix = ""
     let lat_dir = ""
     let lon_dir = ""
+    let date = ""
     let results: string[] = []
     let valid_sentence = false
     let NMEAdata: string = ""; // another iframe could write to this
@@ -27,34 +28,40 @@ namespace gps {
     export function encode() {
         NMEAdata = serial.readLine()
         results = NMEAdata.split(",")
-        if (results[0]=="$GPRMC") {
-            utc = results[1]
-            lat = results[3]
-            lat_dir = results[4]
-            long = results[5]
-            lon_dir = results[6]
-            speed = results[7]
-            course = results[8]
+        if (results[0] == "$GPRMC") {
+            if (results.length() == 13) {
+                utc = results[1]
+                lat = results[3]
+                lat_dir = results[4]
+                long = results[5]
+                lon_dir = results[6]
+                speed = results[7]
+                course = results[8]
+                date = results[9]
 
-            if (results[2] == "A") {
-                valid_sentence = true
-            } else {
-                valid_sentence = false
+                if (results[2] == "A") {
+                    valid_sentence = true
+                } else {
+                    valid_sentence = false
+                }
             }
         }
-        if (results[0]=="$GPGGA") {
-            utc = results[1]
-            lat = results[2]
-            lat_dir = results[3]
-            long = results[4]
-            lon_dir = results[5]
-            quality = results[6]
-            alt = results[9]
 
-            if (quality == "0") {
-                fix = "Fix not available or invalid"
-            } else {
-                fix = "Fix"
+        if (results[0] == "$GPGGA") {
+            if (results.length() == 15) {
+                utc = results[1]
+                lat = results[2]
+                lat_dir = results[3]
+                long = results[4]
+                lon_dir = results[5]
+                quality = results[6]
+                alt = results[9]
+
+                if (quality == "0") {
+                    fix = "Fix not available or invalid"
+                } else {
+                    fix = "Fix"
+                }
             }
         }
     }
@@ -139,8 +146,27 @@ namespace gps {
     */
     //% blockId=gpsaltitude block="gps get altitude"
     //% weight=1
-    export function altitude(): number {
-        return parseFloat(alt);
-    };
+    export function altitude(): string {
+        if (alt === undefined) {
+            console.log("Error undefined")
+        }
+        return alt;
+    }
+
+    /**
+    * Get position Date Time.
+    */
+    //% blockId=gpsparseDateTime block="gps get Date Time"
+    //% weight=1
+    export function DateTime(): string {
+        let h = utc.slice(0, 2);  //Hour
+        let m = utc.slice(2, 4);  // Minute
+        let s = utc.slice(4, 6);  // Second
+        let D = date.slice(0, 2);  // Day
+        let M = date.slice(2, 4);  // Month
+        let Y = date.slice(4, 6);  // Year
+
+        return Y + "/" + M + "/" + D + "/" + h +":"+ m + ":" + s
+    }
 
 }
