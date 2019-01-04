@@ -20,6 +20,32 @@ namespace gps {
     // so 90 is plenty.
     serial.setRxBufferSize(90)    // plenty big
 
+    function validNmeaChecksum(nmeaSentence: string): boolean {
+        let [sentenceWithoutChecksum, checksumString] = nmeaSentence.split("*");
+
+        let correctChecksum = computeNmeaChecksum(sentenceWithoutChecksum);
+
+        // checksum is a 2 digit hex value
+        let actualChecksum = parseInt(checksumString);
+
+        return correctChecksum === actualChecksum;
+    }
+
+    function computeNmeaChecksum(sentenceWithoutChecksum: string): number {
+        // init to first character value after the $
+        let checksum = sentenceWithoutChecksum.charCodeAt(1);
+
+        // process rest of characters, zero delimited
+        for (let i = 2; i < sentenceWithoutChecksum.length; i += 1) {
+            checksum = checksum ^ sentenceWithoutChecksum.charCodeAt(i);
+        }
+
+        // checksum is between 0x00 and 0xff
+        checksum = checksum & 0xff;
+
+        return checksum;
+    }
+    
     /**
     * Get encode.
     */
@@ -27,41 +53,37 @@ namespace gps {
     //% weight=1
     export function encode() {
         NMEAdata = serial.readLine()
-        results = NMEAdata.split(",")
+        results = NMEAdata.split("*")[0].split(",");
         if (results[0] == "$GPRMC") {
-            if (results.length() == 13) {
-                utc = results[1]
-                lat = results[3]
-                lat_dir = results[4]
-                long = results[5]
-                lon_dir = results[6]
-                speed = results[7]
-                course = results[8]
-                date = results[9]
+            utc = results[1]
+            lat = results[3]
+            lat_dir = results[4]
+            long = results[5]
+            lon_dir = results[6]
+            speed = results[7]
+            course = results[8]
+            date = results[9]
 
-                if (results[2] == "A") {
-                    valid_sentence = true
-                } else {
-                    valid_sentence = false
-                }
+            if (results[2] == "A") {
+                valid_sentence = true
+            } else {
+                valid_sentence = false
             }
         }
 
         if (results[0] == "$GPGGA") {
-            if (results.length() == 15) {
-                utc = results[1]
-                lat = results[2]
-                lat_dir = results[3]
-                long = results[4]
-                lon_dir = results[5]
-                quality = results[6]
-                alt = results[9]
+            utc = results[1]
+            lat = results[2]
+            lat_dir = results[3]
+            long = results[4]
+            lon_dir = results[5]
+            quality = results[6]
+            alt = results[9]
 
-                if (quality == "0") {
-                    fix = "Fix not available or invalid"
-                } else {
-                    fix = "Fix"
-                }
+            if (quality == "0") {
+                fix = "Fix not available or invalid"
+            } else {
+                fix = "Fix"
             }
         }
     }
@@ -146,11 +168,14 @@ namespace gps {
     */
     //% blockId=gpsaltitude block="gps get altitude"
     //% weight=1
-    export function altitude(): string {
-        if (alt === undefined) {
-            console.log("Error undefined")
+    export function altitude(): number {
+        if (valid_sentence == true) {
+            return parseFloat(alt)
         }
-        return alt;
+        else {
+            return -1
+            console.log("Fix not available or invalid")
+        }
     }
 
     /**
@@ -159,14 +184,18 @@ namespace gps {
     //% blockId=gpsparseDateTime block="gps get Date Time"
     //% weight=1
     export function DateTime(): string {
-        let h = utc.slice(0, 2);  //Hour
-        let m = utc.slice(2, 4);  // Minute
-        let s = utc.slice(4, 6);  // Second
-        let D = date.slice(0, 2);  // Day
-        let M = date.slice(2, 4);  // Month
-        let Y = date.slice(4, 6);  // Year
+        if (valid_sentence == true) {
+            let h = utc.slice(0, 2);  //Hour
+            let m = utc.slice(2, 4);  // Minute
+            let s = utc.slice(4, 6);  // Second
+            let D = date.slice(0, 2);  // Day
+            let M = date.slice(2, 4);  // Month
+            let Y = date.slice(4, 6);  // Year
 
-        return Y + "/" + M + "/" + D + "/" + h +":"+ m + ":" + s
+            return Y + "/" + M + "/" + D + "/" + h + ":" + m + ":" + s
+        }
+        else {
+            return "DATE invalid";
+        }
     }
-
 }
