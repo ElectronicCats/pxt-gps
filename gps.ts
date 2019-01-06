@@ -21,7 +21,7 @@ namespace gps {
     serial.setRxBufferSize(90)    // plenty big
 
     function toInt(input: string, radix?: number) {
-        if (input.length === 0) return 0;
+        if (!input || input.length === 0) return 0; // Temporal to error is being listed in pxt-core.d.ts for some reason
         const numberOffset = '0'.charCodeAt(0);
         const letterOffset = 'a'.charCodeAt(0);
         const lowerCaseMask = 0x20;
@@ -67,8 +67,6 @@ namespace gps {
         let sentenceWithoutChecksum = sentence[0]
         let checksumString = sentence[1]
         let correctChecksum = computeNmeaChecksum(sentenceWithoutChecksum);
-
-        console.log("check es: " + correctChecksum)
 
         // checksum is a 2 digit hex value
         let actualChecksum = toInt(checksumString, 16)
