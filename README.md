@@ -36,7 +36,6 @@ forever(function () {
 ## TODO
 
 - [ ] Use "pxt bump" to create a tagged release on GitHub
-- [ ] Get your package reviewed and approved https://maker.makecode.com/packages/approval
 
 ## License
 
