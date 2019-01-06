@@ -20,17 +20,68 @@ namespace gps {
     // so 90 is plenty.
     serial.setRxBufferSize(90)    // plenty big
 
-    function validNmeaChecksum(nmeaSentence: string): boolean {
-        let [sentenceWithoutChecksum, checksumString] = nmeaSentence.split("*");
+    function toInt(input: string, radix?: number) {
+        if (input.length === 0) return 0;
+        const numberOffset = '0'.charCodeAt(0);
+        const letterOffset = 'a'.charCodeAt(0);
+        const lowerCaseMask = 0x20;
+        let output = 0;
 
-        let correctChecksum = computeNmeaChecksum(sentenceWithoutChecksum);
+        let sign = 1;
+        switch (input.charAt(0)) {
+            case "-":
+                sign = -1;
+            case "+":
+                input = input.substr(1);
+        }
 
-        // checksum is a 2 digit hex value
-        let actualChecksum = parseInt(checksumString);
+        if ((!radix || radix == 16) && input.slice(0, 2) == "0x") {
+            radix = 16;
+            input = input.substr(2);
+        } else if (!radix) {
+            radix = 10;
+        }
 
-        return correctChecksum === actualChecksum;
+        for (let i = 0; i < input.length; ++i) {
+            const code = input.charCodeAt(i) | lowerCaseMask;
+            let val: number;
+
+            if (code >= numberOffset && code < numberOffset + 10)
+                val = code - numberOffset;
+            else if (code >= letterOffset && code < letterOffset + 26)
+                val = 10 + code - letterOffset;
+
+            if (val == undefined || val >= radix)
+                break;
+            output = output * radix + val;
+        }
+
+        return sign * output;
     }
 
+    /**
+     * Checks that the given NMEA sentence has a valid checksum.
+     */
+    function validNmeaChecksum(nmeaSentence: string): boolean {
+        let sentence = nmeaSentence.split("*")
+        let sentenceWithoutChecksum = sentence[0]
+        let checksumString = sentence[1]
+        let correctChecksum = computeNmeaChecksum(sentenceWithoutChecksum);
+
+        console.log("check es: " + correctChecksum)
+
+        // checksum is a 2 digit hex value
+        let actualChecksum = toInt(checksumString, 16)
+
+        console.log("actual: " + actualChecksum)
+
+        return correctChecksum === actualChecksum
+    }
+
+
+    /**
+     * Generate a checksum for an NMEA sentence without the trailing "*xx".
+     */
     function computeNmeaChecksum(sentenceWithoutChecksum: string): number {
         // init to first character value after the $
         let checksum = sentenceWithoutChecksum.charCodeAt(1);
@@ -45,7 +96,7 @@ namespace gps {
 
         return checksum;
     }
-    
+
     /**
     * Get encode.
     */
