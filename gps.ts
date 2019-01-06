@@ -100,6 +100,7 @@ namespace gps {
     */
     //% blockId=gpsencode block="gps encode"
     //% weight=1
+    //% parts=gps trackArgs=0
     export function encode() {
         NMEAdata = serial.readLine()
         if (!validNmeaChecksum(NMEAdata)) {
@@ -147,6 +148,7 @@ namespace gps {
     */
     //% blockId=gpslongitude block="gps get longitude"
     //% weight=1
+    //% parts=gps trackArgs=0
     export function longitude(): number {
         if (gps_good == true) {
             let h;
@@ -186,6 +188,7 @@ namespace gps {
     */
     //% blockId=gpslatitude block="gps get latitude"
     //% weight=1
+    //% parts=gps trackArgs=0
     export function latitude(): number {
         if (gps_good == true) {
             let h = (lat_dir === 'N') ? 1.0 : -1.0;
@@ -222,6 +225,7 @@ namespace gps {
     */
     //% blockId=gpsaltitude block="gps get altitude"
     //% weight=1
+    //% parts=gps trackArgs=0
     export function altitude(): number {
         if (gps_good == true) {
             return parseFloat(alt)
@@ -237,6 +241,7 @@ namespace gps {
     */
     //% blockId=gpsparseDateTime block="gps get Date Time"
     //% weight=1
+    //% parts=gps trackArgs=0
     export function DateTime(): string {
         if (gps_good == true) {
             let h = utc.slice(0, 2);  //Hour
