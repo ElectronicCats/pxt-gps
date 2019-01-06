@@ -13,7 +13,7 @@ namespace gps {
     let lon_dir = ""
     let date = ""
     let results: string[] = []
-    let valid_sentence = false
+    let gps_good = false
     let NMEAdata: string = ""; // another iframe could write to this
 
     // The buffer size that will hold a GPS sentence. They tend to be 80 characters long
@@ -73,8 +73,6 @@ namespace gps {
         // checksum is a 2 digit hex value
         let actualChecksum = toInt(checksumString, 16)
 
-        console.log("actual: " + actualChecksum)
-
         return correctChecksum === actualChecksum
     }
 
@@ -104,6 +102,10 @@ namespace gps {
     //% weight=1
     export function encode() {
         NMEAdata = serial.readLine()
+        if (!validNmeaChecksum(NMEAdata)) {
+            console.log("Invalid sentence");
+        }
+        else{
         results = NMEAdata.split("*")[0].split(",");
         if (results[0] == "$GPRMC") {
             utc = results[1]
@@ -116,9 +118,9 @@ namespace gps {
             date = results[9]
 
             if (results[2] == "A") {
-                valid_sentence = true
+                gps_good = true
             } else {
-                valid_sentence = false
+                gps_good = false
             }
         }
 
@@ -137,6 +139,7 @@ namespace gps {
                 fix = "Fix"
             }
         }
+        }
     }
 
     /**
@@ -145,7 +148,7 @@ namespace gps {
     //% blockId=gpslongitude block="gps get longitude"
     //% weight=1
     export function longitude(): number {
-        if (valid_sentence == true) {
+        if (gps_good == true) {
             let h;
             let a;
             let dg;
@@ -184,7 +187,7 @@ namespace gps {
     //% blockId=gpslatitude block="gps get latitude"
     //% weight=1
     export function latitude(): number {
-        if (valid_sentence == true) {
+        if (gps_good == true) {
             let h = (lat_dir === 'N') ? 1.0 : -1.0;
             let a;
             let dg;
@@ -220,7 +223,7 @@ namespace gps {
     //% blockId=gpsaltitude block="gps get altitude"
     //% weight=1
     export function altitude(): number {
-        if (valid_sentence == true) {
+        if (gps_good == true) {
             return parseFloat(alt)
         }
         else {
@@ -235,7 +238,7 @@ namespace gps {
     //% blockId=gpsparseDateTime block="gps get Date Time"
     //% weight=1
     export function DateTime(): string {
-        if (valid_sentence == true) {
+        if (gps_good == true) {
             let h = utc.slice(0, 2);  //Hour
             let m = utc.slice(2, 4);  // Minute
             let s = utc.slice(4, 6);  // Second
