@@ -33,7 +33,6 @@ forever(function () {
 
 ## TODO
 
-- [ ] Add "icon.png" image (300x200) in the root folder
 - [ ] Turn on your automated build on https://travis-ci.org
 - [ ] Use "pxt bump" to create a tagged release on GitHub
 - [ ] Get your package reviewed and approved https://maker.makecode.com/packages/approval
