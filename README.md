@@ -1,12 +1,8 @@
 # GPS
 
-This package adds functionality to the GPS board.
+This package adds functionality to the GPS breakout.
 
-This is the Electronic Cats GPS makecode extension - 
-for the ultimate GPS module!
-
-Tested and works great with the L80 GPS module using MTK33x9 chipset
-
+This is the Electronic Cats GPS makecode extension. Tested and works great with the L80 GPS module using MTK33x9 chipset
 
 These modules use TTL serial to communicate, 2 pins are required to interface
 
@@ -31,6 +27,8 @@ forever(function () {
 - `function longitude():` return longitude
 
 - `function altitude()`: return altitude in meters.
+
+- `function Date Time()`: return date and time UTC.
 
 
 ## TODO
