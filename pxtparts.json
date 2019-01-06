@@ -2,14 +2,14 @@
     "gps": {
         "visual": {
             "image": "parts/gps.svg",
-            "width": 63,
-            "height": 63,
+            "width": 72.23829650878906,
+            "height": 96.16539764404297,
             "pinDistance": 7.2,
             "pinLocations": [
-                {"x": 23, "y": 5},
-                {"x": 32, "y": 5},
-                {"x": 5, "y": 5},
-                {"x": 14, "y": 5}
+                {"x": 68, "y": 7},
+                {"x": 62, "y": 7},
+                {"x": 56, "y": 7},
+                {"x": 50, "y": 7}
             ]
         },
         "numberOfPins": 4,
