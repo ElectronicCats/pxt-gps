@@ -1,4 +1,6 @@
 # GPS
+[![Build Status](https://travis-ci.org/ElectronicCats/pxt-gps.svg?branch=master)](https://travis-ci.org/ElectronicCats/pxt-gps) 
+
 
 This package adds functionality to the GPS breakout.
 
@@ -33,7 +35,6 @@ forever(function () {
 
 ## TODO
 
-- [ ] Turn on your automated build on https://travis-ci.org
 - [ ] Use "pxt bump" to create a tagged release on GitHub
 - [ ] Get your package reviewed and approved https://maker.makecode.com/packages/approval
 
