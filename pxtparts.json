@@ -6,10 +6,10 @@
             "height": 96.16539764404297,
             "pinDistance": 7.2,
             "pinLocations": [
-                {"x": 68, "y": 7},
-                {"x": 62, "y": 7},
-                {"x": 56, "y": 7},
-                {"x": 50, "y": 7}
+                {"x": 37, "y": 6},
+                {"x": 30, "y": 6},
+                {"x": 21, "y": 6},
+                {"x": 65, "y": 6}
             ]
         },
         "numberOfPins": 4,
@@ -21,8 +21,8 @@
                 }]
         },
         "pinDefinitions": [
-            {"target": "TX", "style": "male", "orientation": "+Y" },
-            {"target": "RX", "style": "male", "orientation": "+Y" },
+            {"target": "D14/TX", "style": "male", "orientation": "+Y" },
+            {"target": "D13/RX", "style": "male", "orientation": "+Y" },
             {"target": "ground", "style": "male", "orientation": "+Y" },
             {"target": "threeVolt", "style": "male", "orientation": "+Y" }
         ],
