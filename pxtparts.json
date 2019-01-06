@@ -1,0 +1,33 @@
+{
+    "gps": {
+        "visual": {
+            "image": "parts/gps.svg",
+            "width": 63,
+            "height": 63,
+            "pinDistance": 7.2,
+            "pinLocations": [
+                {"x": 23, "y": 5},
+                {"x": 32, "y": 5},
+                {"x": 5, "y": 5},
+                {"x": 14, "y": 5}
+            ]
+        },
+        "numberOfPins": 4,
+        "instantiation": {
+            "kind": "function",
+            "fullyQualifiedName": "gps.encode,gps.longitude,gps.latitude,gps.altitude",
+            "argumentRoles": [{
+                    "pinInstantiationIdx": 0
+                }]
+        },
+        "pinDefinitions": [
+            {"target": "TX", "style": "male", "orientation": "+Y" },
+            {"target": "RX", "style": "male", "orientation": "+Y" },
+            {"target": "ground", "style": "male", "orientation": "+Y" },
+            {"target": "threeVolt", "style": "male", "orientation": "+Y" }
+        ],
+        "assembly": [
+            {"pinIndices": [0, 1, 2, 3]}
+        ]
+    }
+}

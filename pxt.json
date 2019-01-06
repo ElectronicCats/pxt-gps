@@ -8,7 +8,9 @@
     },
     "files": [
         "README.md",
-        "gps.ts"
+        "gps.ts",
+        "pxtparts.json",
+        "parts/gps.svg"
     ],
     "testFiles": [
         "test.ts"
