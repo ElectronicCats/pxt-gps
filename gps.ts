@@ -107,7 +107,7 @@ namespace gps {
     export function encode() {
       NMEAdata = serial.readLine()
       if (validNmeaChecksum(NMEAdata)) {
-        results = NMEAdata.split("*")[0].split(",");
+        results = NMEAdata.split("*")[0].split(",",1);
           if (results[0] == "$GPRMC") {
             utc = results[1]
             lat = results[3]
