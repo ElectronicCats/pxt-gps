@@ -47,7 +47,7 @@ Copyright (c) 2019, Electronic Cats
 ## Supported targets
 
 * for PXT/maker
-* for PXT/micro:bit
+* for PXT/micro:bit (not tested)
 
 ```package
 gps
