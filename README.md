@@ -14,9 +14,10 @@ Electronic Cats invests time and resources providing this open source design, pl
 ```
 forever(function () {
     gps.encode()
-    console.log("" + gps.longitude())
-    console.log("" + gps.latitude())
-    console.log("" + gps.altitude())
+    console.logValue("longitud", gps.longitude())
+    console.logValue("latitud", gps.latitude())
+    console.logValue("altura", gps.altitude())
+    console.log(gps.DateTime())
 })
 ```
 
