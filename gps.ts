@@ -240,7 +240,7 @@ namespace gps {
     //% blockId=gpsparseDateTime block="gps get Date Time"
     //% weight=1
     //% parts=gps trackArgs=0
-    export function DateTime(): string {
+    export function dateTime(): string {
         if (gps_good == true) {
             let h = utc.slice(0, 2);  //Hour
             let m = utc.slice(2, 4);  // Minute
