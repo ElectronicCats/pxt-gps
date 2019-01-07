@@ -44,7 +44,7 @@ namespace gps {
 
         for (let i = 0; i < input.length; ++i) {
             const code = input.charCodeAt(i) | lowerCaseMask;
-            let val: number;
+            let val: number = undefined;
 
             if (code >= numberOffset && code < numberOffset + 10)
                 val = code - numberOffset;
