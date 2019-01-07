@@ -98,16 +98,14 @@ namespace gps {
         return checksum;
     }
 
-    /**
-    * Get encode.
-    */
+    // Get encode    
     //% blockId=gpsencode block="gps encode"
     //% weight=1
     //% parts=gps trackArgs=0
     export function encode() {
       NMEAdata = serial.readLine()
-      if (validNmeaChecksum(NMEAdata)) {
-        results = NMEAdata.split("*")[0].split(",",1);
+      if(validNmeaChecksum(NMEAdata)) {
+        results = NMEAdata.split("*")[0].split(",")
           if (results[0] == "$GPRMC") {
             utc = results[1]
             lat = results[3]
