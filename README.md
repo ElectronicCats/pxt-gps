@@ -34,10 +34,6 @@ forever(function () {
 - `function Date Time()`: return date and time UTC.
 
 
-## TODO
-
-- [ ] Use "pxt bump" to create a tagged release on GitHub
-
 ## License
 
 MIT
