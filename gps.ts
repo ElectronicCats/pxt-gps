@@ -1,3 +1,8 @@
+/**
+ * Reading data of module gps.
+ */
+//% weight=2 color=#002050 icon="\uf041"
+//% advanced=true blockGap=8
 namespace gps {
     let _long = 0
     let _lat = 0
