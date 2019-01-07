@@ -100,13 +100,10 @@ namespace gps {
     //% weight=1
     //% parts=gps trackArgs=0
     export function encode() {
-        NMEAdata = serial.readLine()
-        if (!validNmeaChecksum(NMEAdata)) {
-            console.log("Invalid sentence");
-        }
-        else{
+      NMEAdata = serial.readLine()
+      if (validNmeaChecksum(NMEAdata)) {
         results = NMEAdata.split("*")[0].split(",");
-        if (results[0] == "$GPRMC") {
+          if (results[0] == "$GPRMC") {
             utc = results[1]
             lat = results[3]
             lat_dir = results[4]
@@ -115,15 +112,14 @@ namespace gps {
             speed = results[7]
             course = results[8]
             date = results[9]
-
             if (results[2] == "A") {
                 gps_good = true
             } else {
                 gps_good = false
             }
-        }
+          }
 
-        if (results[0] == "$GPGGA") {
+          if (results[0] == "$GPGGA") {
             utc = results[1]
             lat = results[2]
             lat_dir = results[3]
@@ -131,13 +127,12 @@ namespace gps {
             lon_dir = results[5]
             quality = results[6]
             alt = results[9]
-
             if (quality == "0") {
                 fix = "Fix not available or invalid"
             } else {
                 fix = "Fix"
             }
-        }
+          }
         }
     }
 
@@ -176,7 +171,7 @@ namespace gps {
             _long = ((parseFloat(dg) + (parseFloat(mn) / 60.0)) * h);
         }
         else {
-            console.log("Fix not available or invalid")
+            _long = undefined
         }
         return _long
     }
@@ -212,7 +207,7 @@ namespace gps {
             _lat = (parseFloat(dg) + (parseFloat(mn) / 60.0)) * h;
         }
         else {
-            console.log("Fix not available or invalid")
+            _lat = undefined
         }
         return _lat
     }
@@ -229,8 +224,7 @@ namespace gps {
             return parseFloat(alt)
         }
         else {
-            return -1
-            console.log("Fix not available or invalid")
+            return alt = undefined
         }
     }
 
