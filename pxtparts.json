@@ -21,8 +21,8 @@
                 }]
         },
         "pinDefinitions": [
-            {"target": "D14/TX", "style": "male", "orientation": "+Y" },
-            {"target": "D13/RX", "style": "male", "orientation": "+Y" },
+            {"target": "TX", "style": "male", "orientation": "+Y" },
+            {"target": "RX", "style": "male", "orientation": "+Y" },
             {"target": "ground", "style": "male", "orientation": "+Y" },
             {"target": "threeVolt", "style": "male", "orientation": "+Y" }
         ],
