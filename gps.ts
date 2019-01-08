@@ -98,7 +98,8 @@ namespace gps {
         return checksum;
     }
 
-    // Get encode    
+    
+    // Get encode   
     //% blockId=gpsencode block="gps encode"
     //% weight=1
     //% parts=gps trackArgs=0
@@ -142,7 +143,7 @@ namespace gps {
     /**
     * Get position longitude.
     */
-    //% blockId=gpslongitude block="gps get longitude"
+    //% blockId=gpslongitude block="gps longitude"
     //% weight=1
     //% parts=gps trackArgs=0
     export function longitude(): number {
@@ -182,7 +183,7 @@ namespace gps {
     /**
     * Get position latitude.
     */
-    //% blockId=gpslatitude block="gps get latitude"
+    //% blockId=gpslatitude block="gps latitude"
     //% weight=1
     //% parts=gps trackArgs=0
     export function latitude(): number {
@@ -219,7 +220,7 @@ namespace gps {
     /**
     * Get position altitude. 1 decimal, always meters
     */
-    //% blockId=gpsaltitude block="gps get altitude"
+    //% blockId=gpsaltitude block="gps altitude"
     //% weight=1
     //% parts=gps trackArgs=0
     export function altitude(): number {
@@ -234,7 +235,7 @@ namespace gps {
     /**
     * Get position Date Time.
     */
-    //% blockId=gpsparseDateTime block="gps get Date Time"
+    //% blockId=gpsparseDateTime block="gps date time"
     //% weight=1
     //% parts=gps trackArgs=0
     export function dateTime(): string {
@@ -249,7 +250,7 @@ namespace gps {
             return Y + "/" + M + "/" + D + "/" + h + ":" + m + ":" + s
         }
         else {
-            return "DATE invalid";
+            return "date invalid";
         }
     }
 }
