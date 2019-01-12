@@ -99,7 +99,7 @@ namespace gps {
     }
 
     
-    // Get encode   
+    // Get encode.
     //% blockId=gpsencode block="gps encode"
     //% weight=1
     //% parts=gps trackArgs=0
@@ -218,7 +218,7 @@ namespace gps {
 
 
     /**
-    * Get position altitude. 1 decimal, always meters
+    * Get position altitude. 1 decimal, always meters.
     */
     //% blockId=gpsaltitude block="gps altitude"
     //% weight=1
