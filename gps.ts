@@ -1,7 +1,7 @@
 /**
  * Reading data of module gps.
  */
-//% weight=2 color=#002050 icon="\uf041"
+//% weight=2 color=#005585 icon="\uf041"
 //% advanced=true blockGap=8
 namespace gps {
     let _long = 0
@@ -20,6 +20,9 @@ namespace gps {
     let results: string[] = []
     let gps_good = false
     let NMEAdata: string = ""; // another iframe could write to this
+
+    //Init serial to 9600 bauds, default speed for GPS
+    serial.setBaudRate(BaudRate.BaudRate9600)
 
     // The buffer size that will hold a GPS sentence. They tend to be 80 characters long
     // so 90 is plenty.
@@ -98,45 +101,45 @@ namespace gps {
         return checksum;
     }
 
-    
+
     // Get encode.
     //% blockId=gpsencode block="gps encode"
     //% weight=1
     //% parts=gps trackArgs=0
     export function encode() {
-      NMEAdata = serial.readLine()
-      if(validNmeaChecksum(NMEAdata)) {
-        results = NMEAdata.split("*")[0].split(",")
-          if (results[0] == "$GPRMC") {
-            utc = results[1]
-            lat = results[3]
-            lat_dir = results[4]
-            long = results[5]
-            lon_dir = results[6]
-            speed = results[7]
-            course = results[8]
-            date = results[9]
-            if (results[2] == "A") {
-                gps_good = true
-            } else {
-                gps_good = false
+        NMEAdata = serial.readLine()
+        if (validNmeaChecksum(NMEAdata)) {
+            results = NMEAdata.split("*")[0].split(",")
+            if (results[0] == "$GPRMC") {
+                utc = results[1]
+                lat = results[3]
+                lat_dir = results[4]
+                long = results[5]
+                lon_dir = results[6]
+                speed = results[7]
+                course = results[8]
+                date = results[9]
+                if (results[2] == "A") {
+                    gps_good = true
+                } else {
+                    gps_good = false
+                }
             }
-          }
 
-          if (results[0] == "$GPGGA") {
-            utc = results[1]
-            lat = results[2]
-            lat_dir = results[3]
-            long = results[4]
-            lon_dir = results[5]
-            quality = results[6]
-            alt = results[9]
-            if (quality == "0") {
-                fix = "Fix not available or invalid"
-            } else {
-                fix = "Fix"
+            if (results[0] == "$GPGGA") {
+                utc = results[1]
+                lat = results[2]
+                lat_dir = results[3]
+                long = results[4]
+                lon_dir = results[5]
+                quality = results[6]
+                alt = results[9]
+                if (quality == "0") {
+                    fix = "Fix not available or invalid"
+                } else {
+                    fix = "Fix"
+                }
             }
-          }
         }
     }
 
